@@ -9,6 +9,9 @@ BACKSPACE_THRESHOLD = 15
 text = [""]
 curLine = 0
 
+# todo:
+# 1) cursor
+# 2) allow for holding any key arbitrary length
 
 def main():
     global text
@@ -16,7 +19,6 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode([WIDTH, HEIGHT])
     pygame.display.set_caption("pyEdit")
-
 
     font = pygame.font.SysFont("consolas", FONT_SIZE)
 
@@ -35,13 +37,13 @@ def main():
                     text.append('')
                     curLine += 1
                 elif event.key == pygame.K_BACKSPACE:
+                    print(event.key)
                     handle_backspace()
                     backspace_ticks = 1
                 else:
                     text[curLine] += event.unicode
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_BACKSPACE:
-                    backspace = False
                     backspace_ticks = 0
 
         screen.fill(WHITE)
