@@ -12,6 +12,7 @@ curLine = 0
 # todo:
 # 1) cursor
 # 2) allow for holding any key arbitrary length
+# 3) add camera for moving type off screen
 
 def main():
     global text
