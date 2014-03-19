@@ -87,6 +87,8 @@ def handle_backspace(cursor):
     if len(text[curLine]) == 0 and curLine != 0:
         del text[curLine]
         curLine -= 1
+        cursor.y -= 1
+        cursor.x = len(text[curLine]) + 1
     else:
         text[curLine] = text[curLine][0:-1]
 
