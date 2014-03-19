@@ -11,7 +11,7 @@ curLine = 0
 
 # todo:
 # 1) cursor
-# 2) add camera for moving type off screen
+# 2) camera for moving type off screen
 
 
 def main():
@@ -35,15 +35,8 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 cur_ticks = 1
                 cur_key = event.key
-                if event.key == pygame.K_TAB:
-                    text[curLine] += '    '
-                elif event.key == pygame.K_RETURN:
-                    text.append('')
-                    curLine += 1
-                elif event.key == pygame.K_BACKSPACE:
-                    handle_backspace()
-                else:
-                    text[curLine] += event.unicode
+                cur_unicode = event.unicode
+                handle_key_input(event.key, event.unicode)
             elif event.type == pygame.KEYUP:
                 cur_ticks = 0
 
@@ -53,10 +46,7 @@ def main():
             cur_ticks += 1
 
         if cur_ticks > KEY_THRESHOLD:
-            if cur_key == pygame.K_BACKSPACE:
-                handle_backspace()
-            else:
-                text[curLine] += event.unicode
+            handle_key_input(cur_key, cur_unicode)
 
         for i in range(curLine + 1):
             label = font.render(text[i], 1, BLACK)
@@ -66,6 +56,20 @@ def main():
         clock.tick(FPS)
 
     pygame.quit()
+
+
+def handle_key_input(key, unicode):
+    global curLine
+    global text
+    if key == pygame.K_TAB:
+        text[curLine] += '    '
+    elif key == pygame.K_RETURN:
+        text.append('')
+        curLine += 1
+    elif key == pygame.K_BACKSPACE:
+        handle_backspace()
+    else:
+        text[curLine] += unicode
 
 
 def handle_backspace():
