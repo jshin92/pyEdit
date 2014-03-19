@@ -1,11 +1,11 @@
 import pygame
-import constants
 from Cursor import Cursor
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 WIDTH = 680
 HEIGHT = 320
 FPS = 60
+FONT_SIZE = 24
 KEY_THRESHOLD = 15
 text = [""]
 curLine = 0
@@ -22,11 +22,11 @@ def main():
     screen = pygame.display.set_mode([WIDTH, HEIGHT])
     pygame.display.set_caption("pyEdit")
 
-    font = pygame.font.SysFont("consolas", constants.FONT_SIZE)
-
+    font = pygame.font.SysFont("consolas", FONT_SIZE)
+    font_size = pygame.font.Font.size(font, "a")
     cur_ticks = 0
     done = False
-    cursor = Cursor(0, 0, screen)
+    cursor = Cursor(0, 0, screen, font_size[0], font_size[1])
 
     clock = pygame.time.Clock()
 
@@ -38,7 +38,7 @@ def main():
                 cur_ticks = 1
                 cur_key = event.key
                 cur_unicode = event.unicode
-                handle_key_input(event.key, event.unicode)
+                handle_key_input(event.key, event.unicode, cursor)
             elif event.type == pygame.KEYUP:
                 cur_ticks = 0
 
@@ -48,11 +48,11 @@ def main():
             cur_ticks += 1
 
         if cur_ticks > KEY_THRESHOLD:
-            handle_key_input(cur_key, cur_unicode)
+            handle_key_input(cur_key, cur_unicode, cursor)
 
         for i in range(curLine + 1):
             label = font.render(text[i], 1, BLACK)
-            screen.blit(label, (0, constants.FONT_SIZE * i))
+            screen.blit(label, (0, FONT_SIZE * i))
 
         cursor.draw()
 
@@ -62,7 +62,7 @@ def main():
     pygame.quit()
 
 
-def handle_key_input(key, unicode):
+def handle_key_input(key, unicode, cursor):
     global curLine
     global text
     if key == pygame.K_TAB:
@@ -70,13 +70,18 @@ def handle_key_input(key, unicode):
     elif key == pygame.K_RETURN:
         text.append('')
         curLine += 1
+        cursor.y += 1
+        cursor.x = 0
     elif key == pygame.K_BACKSPACE:
-        handle_backspace()
+        handle_backspace(cursor)
+        cursor.x -= 1
     else:
         text[curLine] += unicode
+        if key != pygame.K_LSHIFT and key != pygame.K_RSHIFT:
+            cursor.x += 1
 
 
-def handle_backspace():
+def handle_backspace(cursor):
     global curLine
     global text
     if len(text[curLine]) == 0 and curLine != 0:
