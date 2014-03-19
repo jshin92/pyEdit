@@ -7,6 +7,7 @@ HEIGHT = 320
 FPS = 60
 FONT_SIZE = 24
 KEY_THRESHOLD = 15
+TAB_STOP = 4
 text = [""]
 curLine = 0
 
@@ -67,6 +68,7 @@ def handle_key_input(key, unicode, cursor):
     global text
     if key == pygame.K_TAB:
         text[curLine] += '    '
+        cursor.x += TAB_STOP
     elif key == pygame.K_RETURN:
         text.append('')
         curLine += 1
@@ -74,9 +76,11 @@ def handle_key_input(key, unicode, cursor):
         cursor.x = 0
     elif key == pygame.K_BACKSPACE:
         handle_backspace(cursor)
-        cursor.x -= 1
+        if cursor.x > 0:
+            cursor.x -= 1
     else:
         text[curLine] += unicode
+        # don't advance cursor if pressing shift
         if key != pygame.K_LSHIFT and key != pygame.K_RSHIFT:
             cursor.x += 1
 
