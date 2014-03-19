@@ -1,10 +1,11 @@
 import pygame
+import constants
+from Cursor import Cursor
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 WIDTH = 680
 HEIGHT = 320
 FPS = 60
-FONT_SIZE = 24
 KEY_THRESHOLD = 15
 text = [""]
 curLine = 0
@@ -21,10 +22,11 @@ def main():
     screen = pygame.display.set_mode([WIDTH, HEIGHT])
     pygame.display.set_caption("pyEdit")
 
-    font = pygame.font.SysFont("consolas", FONT_SIZE)
+    font = pygame.font.SysFont("consolas", constants.FONT_SIZE)
 
     cur_ticks = 0
     done = False
+    cursor = Cursor(0, 0, screen)
 
     clock = pygame.time.Clock()
 
@@ -50,7 +52,9 @@ def main():
 
         for i in range(curLine + 1):
             label = font.render(text[i], 1, BLACK)
-            screen.blit(label, (0, FONT_SIZE * i))
+            screen.blit(label, (0, constants.FONT_SIZE * i))
+
+        cursor.draw()
 
         pygame.display.flip()
         clock.tick(FPS)
