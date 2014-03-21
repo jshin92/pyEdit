@@ -1,9 +1,10 @@
 import pygame
 from Cursor import Cursor
+from Camera import Camera
 from Text import Text
 WHITE = (255, 255, 255)
-WIDTH = 680
-HEIGHT = 320
+WIDTH = 650
+HEIGHT = 360
 FPS = 60
 FONT_SIZE = 24
 
@@ -19,10 +20,10 @@ def main():
     font = pygame.font.SysFont("consolas", FONT_SIZE)
     font_size = pygame.font.Font.size(font, "a")
     done = False
-    cursor = Cursor(0, 0, screen, font_size[0], font_size[1])
-
+    camera = Camera()
+    cursor = Cursor(0, 0, screen, font_size[0], font_size[1], camera)
     clock = pygame.time.Clock()
-    text = Text(cursor, font, FONT_SIZE, screen)
+    text = Text(cursor, font, FONT_SIZE, font_size, screen, [WIDTH, HEIGHT], camera)
     while not done:
         for event in pygame.event.get():
             if text.handle_event(event):
