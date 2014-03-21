@@ -9,7 +9,7 @@ FPS = 60
 FONT_SIZE = 24
 
 # todo:
-# 1) camera for moving type off screen
+# 1) command mode and insert mode
 
 
 def main():
