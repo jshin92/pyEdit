@@ -12,8 +12,7 @@ text = [""]
 curLine = 0
 
 # todo:
-# 1) cursor
-# 2) camera for moving type off screen
+# 1) camera for moving type off screen
 
 
 def main():
@@ -81,7 +80,7 @@ def handle_key_input(key, unicode, cursor):
     else:
         text[curLine] += unicode
         # don't advance cursor if pressing shift
-        if key != pygame.K_LSHIFT and key != pygame.K_RSHIFT:
+        if key != pygame.K_LSHIFT and key != pygame.K_RSHIFT and key != pygame.K_CAPSLOCK:
             cursor.x += 1
 
 
