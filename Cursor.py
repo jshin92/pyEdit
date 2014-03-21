@@ -1,5 +1,6 @@
 import pygame
 RED = (255, 0, 0)
+BLUE = (0, 0, 255)
 
 
 class Cursor:
@@ -10,9 +11,18 @@ class Cursor:
         self.width = font_width
         self.height = font_height - 1
         self.camera = camera
+        self.mode = 'command'
+        self.cur_color = BLUE
+
+    def set_mode(self, mode):
+        self.mode = mode
+        if self.mode == 'command':
+            self.cur_color = BLUE
+        else:
+            self.cur_color = RED
 
     def draw(self):
-        pygame.draw.rect(self.surface, RED, [self.x * self.width - self.camera.x * self.width,
-                                             self.y * self.height - self.camera.y * self.height,
-                                             self.width,
-                                             self.height])
+        pygame.draw.rect(self.surface, self.cur_color, [self.x * self.width - self.camera.x * self.width,
+                                                        self.y * self.height - self.camera.y * self.height,
+                                                        self.width,
+                                                        self.height])
