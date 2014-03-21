@@ -65,7 +65,7 @@ class Text:
             self.handle_backspace()
             if self.cursor.x > 0:
                 self.cursor.x -= 1
-                if self.cursor.x > self.viewport_x_blocks:
+                if self.cursor.x >= self.viewport_x_blocks - 1:
                     self.camera.x -= 1
         else:
             self.text[self.cur_line] += self.cur_unicode
@@ -83,6 +83,7 @@ class Text:
                 self.camera.y -= 1
             self.cursor.y -= 1
             self.cursor.x = len(self.text[self.cur_line]) + 1
+            self.camera.x = max(0, self.cursor.x - self.camera.x - self.viewport_x_blocks + 1)
         else:
             self.text[self.cur_line] = self.text[self.cur_line][0:-1]
 
